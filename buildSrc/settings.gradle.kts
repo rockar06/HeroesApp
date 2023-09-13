@@ -12,7 +12,3 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
-rootProject.name = "MarvelApp"
-include(":app-phone")
-project(":app-phone").projectDir = file("./apps/app-phone")

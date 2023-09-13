@@ -6,9 +6,9 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.ExtensionAware
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
-val Project.`android`: LibraryExtension
+val Project.`androidLibrary`: LibraryExtension?
     get() =
-        (this as ExtensionAware).extensions.getByName("android") as LibraryExtension
+        (this as ExtensionAware).extensions.findByName("android") as? LibraryExtension
 
 fun Project.`android`(configure: Action<LibraryExtension>): Unit =
     (this as ExtensionAware).extensions.configure("android", configure)

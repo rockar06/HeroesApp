@@ -5,6 +5,7 @@ object Plugins {
     const val androidLibrary = "com.android.library"
     const val kotlinAndroid = "org.jetbrains.kotlin.android"
     const val kotlinKapt = "org.jetbrains.kotlin.kapt"
+    const val verifyChanges = "com.rockar.android.plugins.verify"
 }
 
 object ProjectDependencies {
@@ -27,7 +28,8 @@ object ProjectDependencies {
     const val jUnit = "junit:junit:$jUnitVersion"
     const val jUnitInstrumented = "androidx.test.ext:junit:$jUnitInstrumentedVersion"
     const val espressoCore = "androidx.test.espresso:espresso-core:$espressoCoreVersion"
+    const val truthLibrary = "com.google.truth:truth:$truthVersion"
+    const val mockkLibrary = "io.mockk:mockk:$mockkVersion"
 
     const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 }
-

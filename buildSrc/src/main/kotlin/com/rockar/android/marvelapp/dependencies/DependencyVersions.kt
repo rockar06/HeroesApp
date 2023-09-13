@@ -13,6 +13,8 @@ const val okHttpBomVersion = "4.11.0"
 const val jUnitVersion = "4.13.2"
 const val jUnitInstrumentedVersion = "1.1.5"
 const val espressoCoreVersion = "3.5.1"
+const val truthVersion = "1.1.4"
+const val mockkVersion = "1.13.7"
 
 object GradleConfigVersions {
     const val compileSdk = 34

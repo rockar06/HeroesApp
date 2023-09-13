@@ -8,7 +8,6 @@ import com.rockar.android.marvelapp.utils.kotlinOptions
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.project
 
 class MarvelFeaturePlugin : Plugin<Project> {
 

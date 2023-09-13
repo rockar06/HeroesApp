@@ -4,12 +4,6 @@ plugins {
     id("org.gradle.kotlin.kotlin-dsl") version "4.0.6"
 }
 
-repositories {
-    google()
-    mavenCentral()
-    gradlePluginPortal()
-}
-
 sourceSets.main {
     java.srcDirs("src/main/kotlin")
 }
@@ -24,6 +18,18 @@ gradlePlugin {
         create("androidLibraryConfiguration") {
             id = "com.rockar.android.plugins.feature"
             implementationClass = "com.rockar.android.marvelapp.plugins.MarvelFeaturePlugin"
+        }
+        create("validateChangesPlugin") {
+            id = "com.rockar.android.plugins.verify"
+            implementationClass = "com.rockar.android.marvelapp.plugins.VerifyChangesPlugin"
+        }
+        create("checkAndFormatKotlinCodePlugin") {
+            id = "com.rockar.android.plugins.format"
+            implementationClass = "com.rockar.android.marvelapp.plugins.FormatCodePlugin"
+        }
+        create("checkCodeCoveragePlugin") {
+            id = "com.rockar.android.plugins.coverage"
+            implementationClass = "com.rockar.android.marvelapp.plugins.CodeCoveragePlugin"
         }
     }
 }
