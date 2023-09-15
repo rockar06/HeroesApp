@@ -1,7 +1,7 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.9.10"
+    id("org.jetbrains.kotlin.jvm") version "1.9.0"
     id("java-gradle-plugin")
-    id("org.gradle.kotlin.kotlin-dsl") version "4.0.6"
+    `kotlin-dsl`
 }
 
 sourceSets.main {
@@ -10,7 +10,7 @@ sourceSets.main {
 
 dependencies {
     implementation("com.android.tools.build:gradle:8.1.1")
-    implementation(kotlin("gradle-plugin:1.9.10"))
+    implementation(kotlin("gradle-plugin:1.9.0"))
 }
 
 gradlePlugin {

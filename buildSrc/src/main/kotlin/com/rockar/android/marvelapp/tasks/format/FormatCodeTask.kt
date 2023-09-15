@@ -18,6 +18,7 @@ abstract class FormatCodeTask : DefaultTask() {
     @TaskAction
     fun executeTask() {
         project.javaexec {
+            workingDir = project.rootDir
             classpath = project.configurations.getByName("ktlint")
             mainClass.set("com.pinterest.ktlint.Main")
             configureFilesToVerify()
@@ -25,18 +26,17 @@ abstract class FormatCodeTask : DefaultTask() {
     }
 
     private fun JavaExecSpec.configureFilesToVerify() {
-        println("Path for current project")
         val filesToCheck = if (project.hasProperty("localChanges")) {
             findLocalChangesByModule(project)
         } else arrayOf(
             "**/src/**/*.kt", // Include any kotlin file in the project
             "**.kts", // Include any kotlin script in the project
+            "!**/build/**", // exclude build folders
         )
         jvmArgs("--add-opens=java.base/java.lang=ALL-UNNAMED")
         args(
             "-F", // Apply Autocorrect format if possible
             *filesToCheck,
-            "!**/build/**", // exclude build folders
         )
     }
 }

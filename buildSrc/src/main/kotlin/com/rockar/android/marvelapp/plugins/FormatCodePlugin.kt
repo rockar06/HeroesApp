@@ -20,8 +20,8 @@ class FormatCodePlugin : Plugin<Project> {
 
     private fun addKtlintDependencyToProject(target: Project) {
         target.configurations.create("ktlint") {
-            dependencies.add(target.dependencies.create("com.pinterest:ktlint:0.48.2"))
-            target.dependencies.constraints.create("com.pinterest:ktlint:0.48.2").apply {
+            dependencies.add(target.dependencies.create("com.pinterest:ktlint:0.50.0"))
+            target.dependencies.constraints.create("com.pinterest:ktlint:0.50.0").apply {
                 attributes {
                     attribute(
                         Bundling.BUNDLING_ATTRIBUTE,

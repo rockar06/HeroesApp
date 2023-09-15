@@ -27,7 +27,7 @@ object FileUtils {
             ""
         ).replace("\\", "/") // for Windows OS
 
-        return changedFiles.filter { it.contains(projectPath) }.toTypedArray()
+        return changedFiles.filter { it.startsWith("$projectPath/") }.toTypedArray()
     }
 
     fun findLocalChanges(project: Project): Array<String> {
@@ -47,7 +47,7 @@ object FileUtils {
         result.forEach {
             val matcher = kotlinFilesPattern.matcher(it)
             if (matcher.find()) {
-                changedFiles.add("/$it")
+                changedFiles.add("$it")
             }
         }
 

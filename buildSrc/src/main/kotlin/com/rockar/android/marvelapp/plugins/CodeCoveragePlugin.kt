@@ -47,7 +47,7 @@ class CodeCoveragePlugin : Plugin<Project> {
 
             classDirectories.setFrom(buildClassDirectories(project))
             sourceDirectories.setFrom(DEFAULT_SOURCE_DIRECTORIES)
-            executionData(File(project.buildDir, "jacoco/${testTaskName}.exec"))
+            executionData(File(getBuildDir(project), "jacoco/${testTaskName}.exec"))
         }
     }
 
@@ -79,14 +79,18 @@ class CodeCoveragePlugin : Plugin<Project> {
 
             classDirectories.setFrom(buildClassDirectories(project))
             sourceDirectories.setFrom(DEFAULT_SOURCE_DIRECTORIES)
-            executionData(File(project.buildDir, "jacoco/${testTaskName}.exec"))
+            executionData(File(getBuildDir(project), "jacoco/${testTaskName}.exec"))
         }
     }
 
     private fun buildClassDirectories(project: Project): MutableIterable<*> {
-        return project.fileTree("${project.buildDir}$DEFAULT_FILE_TREE_PATH").apply {
+        return project.fileTree("${getBuildDir(project)}$DEFAULT_FILE_TREE_PATH").apply {
                 setExcludes(DEFAULT_EXCLUDES)
             }.toMutableList()
+    }
+
+    private fun getBuildDir(project: Project): File {
+        return project.layout.buildDirectory.asFile.get()
     }
 
     companion object {

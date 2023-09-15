@@ -19,6 +19,7 @@ abstract class CheckCodeTask : DefaultTask() {
     @TaskAction
     fun executeTask() {
         project.javaexec {
+            workingDir = project.rootDir
             classpath = project.configurations.getByName("ktlint")
             mainClass.set("com.pinterest.ktlint.Main")
             configureFilesToVerify()
@@ -31,10 +32,10 @@ abstract class CheckCodeTask : DefaultTask() {
         } else arrayOf(
             "**/src/**/*.kt", // Include any kotlin file in the project
             "**.kts", // Include any kotlin script in the project
+            "!**/build/**",
         )
         args(
             *filesToCheck,
-            "!**/build/**", // exclude build folders
         )
     }
 }
