@@ -2,7 +2,6 @@ package com.rockar.android.marvelapp.utils
 
 import org.gradle.api.Project
 import java.io.ByteArrayOutputStream
-import java.util.regex.Pattern
 import kotlin.system.measureTimeMillis
 
 object FileUtils {
@@ -10,31 +9,30 @@ object FileUtils {
     private const val SPACE_DELIMITER = " "
     private const val EMPTY_STRING = ""
     private const val SRC_DIR_NAME = "src"
-    private const val GIT_DIFF_COMMAND = "git diff --name-only --diff-filter=AMR HEAD"
+    private const val GIT_DIFF_COMMAND = "git diff --name-only --diff-filter=AMR"
+    private const val GIT_DIFF_UNTRACKED_COMMAND = "git ls-files --others --exclude-standard"
     private const val SPLASH_PATH_DELIMITER = "/"
     private const val KOTLIN_FILES_PATTERN = "(\\.(kt|kts)\$)"
+
+    private fun getChangedFiles(project: Project, gitCommand: String): List<String> {
+        val systemOutStream = ByteArrayOutputStream()
+        project.exec {
+            commandLine = gitCommand.split(SPACE_DELIMITER)
+            standardOutput = systemOutStream
+        }
+        return systemOutStream.toString().trim().split('\n').also {
+            systemOutStream.close()
+        }
+    }
 
     private fun findLocalChanges(project: Project): List<String> {
         val changedFiles = arrayListOf<String>()
 
         val timeToFindLocalChanges = measureTimeMillis {
-            val systemOutStream = ByteArrayOutputStream()
-            project.exec {
-                commandLine = GIT_DIFF_COMMAND.split(SPACE_DELIMITER)
-                standardOutput = systemOutStream
-            }
-
-            val result = systemOutStream.toString().trim().split('\n')
-            systemOutStream.close()
-
-            val kotlinFilesPattern = Pattern.compile(KOTLIN_FILES_PATTERN)
-
-            result.forEach {
-                val matcher = kotlinFilesPattern.matcher(it)
-                if (matcher.find()) {
-                    changedFiles.add(it)
-                }
-            }
+            changedFiles.addAll(
+                getChangedFiles(project, GIT_DIFF_COMMAND) +
+                        getChangedFiles(project, GIT_DIFF_UNTRACKED_COMMAND)
+            )
         }
 
         project.logger.lifecycle("Computing local changes took $timeToFindLocalChanges ms")
