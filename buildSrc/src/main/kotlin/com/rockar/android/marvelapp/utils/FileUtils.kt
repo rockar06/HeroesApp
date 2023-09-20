@@ -4,6 +4,7 @@ import org.gradle.api.Project
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.regex.Pattern
+import kotlin.system.measureTimeMillis
 
 object FileUtils {
 
@@ -30,33 +31,65 @@ object FileUtils {
         return changedFiles.filter { it.startsWith("$projectPath/") }.toTypedArray()
     }
 
-    fun findLocalChanges(project: Project): Array<String> {
-        val systemOutStream = ByteArrayOutputStream()
-
-        project.exec {
-            commandLine = GIT_DIFF_COMMAND.split(SPACE_DELIMITER)
-            standardOutput = systemOutStream
-        }
-
-        val result = systemOutStream.toString().trim().split('\n')
-        systemOutStream.close()
-
-        val kotlinFilesPattern = Pattern.compile(KOTLIN_FILES_PATTERN)
+    fun findLocalChanges(project: Project): List<String> {
         val changedFiles = arrayListOf<String>()
 
-        result.forEach {
-            val matcher = kotlinFilesPattern.matcher(it)
-            if (matcher.find()) {
-                changedFiles.add("$it")
+
+        val timeToFindLocalChanges = measureTimeMillis {
+            val systemOutStream = ByteArrayOutputStream()
+            project.exec {
+                commandLine = GIT_DIFF_COMMAND.split(SPACE_DELIMITER)
+                standardOutput = systemOutStream
+            }
+
+            val result = systemOutStream.toString().trim().split('\n')
+            systemOutStream.close()
+
+            val kotlinFilesPattern = Pattern.compile(KOTLIN_FILES_PATTERN)
+
+
+            result.forEach {
+                val matcher = kotlinFilesPattern.matcher(it)
+                if (matcher.find()) {
+                    changedFiles.add("$it")
+                }
             }
         }
 
-        return changedFiles.toTypedArray()
+        project.logger.lifecycle("Computing local changes took $timeToFindLocalChanges ms")
+
+        return changedFiles
     }
 
-    fun getModulesChanged(project: Project): Set<String> = findLocalChanges(project).map {
-        val splitterString = it.split(SPLASH_PATH_DELIMITER)
-        val indexSrc = splitterString.indexOf(SRC_DIR_NAME)
-        splitterString.getOrElse(indexSrc - 1) { EMPTY_STRING }
-    }.filterNot { EXCLUDED_PROJECTS.contains(it) }.toSet()
+    fun getModulesChanged(project: Project): ProjectChanges {
+        val projectChanges = ProjectChanges()
+        val localChanges = findLocalChanges(project).also { projectChanges.affectedFiles = it }
+        val affectedModules = mutableSetOf<Project>()
+
+        measureTimeMillis {
+            val affectedModulesByChanges = localChanges.map {
+                val splitterString = it.split(SPLASH_PATH_DELIMITER)
+                val indexSrc = splitterString.indexOf(SRC_DIR_NAME)
+                splitterString.getOrElse(indexSrc - 1) { EMPTY_STRING }
+            }.filterNot { it.isEmpty() }.toSet()
+
+
+            project.subprojects {
+                if (affectedModulesByChanges.contains(name)) {
+                    affectedModules.add(this)
+                }
+            }
+
+            projectChanges.affectedModules = affectedModules
+        }.also {
+            project.logger.lifecycle("Computing affected modules took $it ms")
+        }
+
+        return projectChanges
+    }
 }
+
+data class ProjectChanges(
+    var affectedFiles: List<String> = emptyList(),
+    var affectedModules: Set<Project> = emptySet()
+)

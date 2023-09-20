@@ -1,10 +1,8 @@
 package com.rockar.android.marvelapp.tasks.format
 
-import com.rockar.android.marvelapp.utils.FileUtils.findLocalChangesByModule
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import org.gradle.language.base.plugins.LifecycleBasePlugin
-import org.gradle.process.JavaExecSpec
 
 abstract class CheckCodeTask : DefaultTask() {
 
@@ -19,23 +17,14 @@ abstract class CheckCodeTask : DefaultTask() {
     @TaskAction
     fun executeTask() {
         project.javaexec {
-            workingDir = project.rootDir
+            workingDir = project.projectDir
             classpath = project.configurations.getByName("ktlint")
             mainClass.set("com.pinterest.ktlint.Main")
-            configureFilesToVerify()
+            args(
+                "**/src/**/*.kt", // Include any kotlin file in the project
+                "**.kts", // Include any kotlin script in the project
+                "!**/build/**", // exclude build folders
+            )
         }
-    }
-
-    private fun JavaExecSpec.configureFilesToVerify() {
-        val filesToCheck = if (project.hasProperty("localChanges")) {
-            findLocalChangesByModule(project)
-        } else arrayOf(
-            "**/src/**/*.kt", // Include any kotlin file in the project
-            "**.kts", // Include any kotlin script in the project
-            "!**/build/**",
-        )
-        args(
-            *filesToCheck,
-        )
     }
 }

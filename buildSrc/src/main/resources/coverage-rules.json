@@ -1,0 +1,7 @@
+{
+  "branchThreshold": 0.8,
+  "instructionThreshold": 0.9,
+  "ignore": [
+    "app-phone"
+  ]
+}

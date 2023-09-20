@@ -1,7 +1,8 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.9.0"
-    id("java-gradle-plugin")
     `kotlin-dsl`
+    kotlin("plugin.serialization") version "1.9.0"
+    kotlin("jvm") version "1.9.0"
+    id("java-gradle-plugin")
 }
 
 sourceSets.main {
@@ -11,6 +12,7 @@ sourceSets.main {
 dependencies {
     implementation("com.android.tools.build:gradle:8.1.1")
     implementation(kotlin("gradle-plugin:1.9.0"))
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 }
 
 gradlePlugin {
