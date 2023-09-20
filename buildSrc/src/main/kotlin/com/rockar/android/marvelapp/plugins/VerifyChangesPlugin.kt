@@ -11,35 +11,17 @@ class VerifyChangesPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         if (target.rootProject == target) {
             target.tasks.register("verifyChanges", VerifyChangesTask::class.java) {
-                val projectChanges = getModulesChanged(target)
 
-                target.logger.lifecycle("=============== Affected Files ===============")
-                if (projectChanges.affectedFiles.isNotEmpty()) {
-                    target.logger.lifecycle(
-                        projectChanges.affectedFiles.joinToString(
-                            separator = "\n - ",
-                            prefix = " - ",
-                        ),
-                    )
+                val projectsToEvaluate = if (target.hasProperty("pipeline")) {
+                    getLocalTaskToExecute(target)
                 } else {
-                    target.logger.lifecycle(" - No changes found")
+                    target.subprojects
                 }
 
-                target.logger.lifecycle("=============== Affected Modules ===============")
-                if (projectChanges.affectedModules.isNotEmpty()) {
-                    target.logger.lifecycle(
-                        projectChanges.affectedModules.joinToString(
-                            separator = "\n - ",
-                            prefix = " - ",
-                        ) { it.name },
-                    )
-                } else {
-                    target.logger.lifecycle(" - No modules found")
-                }
 
                 target.logger.lifecycle("=============== Task to execute ===============")
 
-                val taskToExecute = projectChanges.affectedModules.flatMap { subProject ->
+                val taskToExecute = projectsToEvaluate.flatMap { subProject ->
                     subProject.tasks.filter {
                         isValidTaskToBeAdded(subProject.name, it.name, target)
                     }.map {
@@ -61,6 +43,36 @@ class VerifyChangesPlugin : Plugin<Project> {
                 dependsOn(taskToExecute)
             }
         }
+    }
+
+    private fun getLocalTaskToExecute(target: Project): Set<Project> {
+        val projectChanges = getModulesChanged(target)
+
+        target.logger.lifecycle("=============== Affected Files ===============")
+        if (projectChanges.affectedFiles.isNotEmpty()) {
+            target.logger.lifecycle(
+                projectChanges.affectedFiles.joinToString(
+                    separator = "\n - ",
+                    prefix = " - ",
+                ),
+            )
+        } else {
+            target.logger.lifecycle(" - No changes found")
+        }
+
+        target.logger.lifecycle("=============== Affected Modules ===============")
+        if (projectChanges.affectedModules.isNotEmpty()) {
+            target.logger.lifecycle(
+                projectChanges.affectedModules.joinToString(
+                    separator = "\n - ",
+                    prefix = " - ",
+                ) { it.name },
+            )
+        } else {
+            target.logger.lifecycle(" - No modules found")
+        }
+
+        return projectChanges.affectedModules
     }
 
     private fun isValidTaskToBeAdded(
