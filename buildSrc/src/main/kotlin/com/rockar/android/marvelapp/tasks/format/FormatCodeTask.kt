@@ -16,7 +16,7 @@ abstract class FormatCodeTask : DefaultTask() {
     @TaskAction
     fun executeTask() {
         project.javaexec {
-            workingDir = project.rootDir
+            workingDir = project.projectDir
             classpath = project.configurations.getByName("ktlint")
             mainClass.set("com.pinterest.ktlint.Main")
             jvmArgs("--add-opens=java.base/java.lang=ALL-UNNAMED")

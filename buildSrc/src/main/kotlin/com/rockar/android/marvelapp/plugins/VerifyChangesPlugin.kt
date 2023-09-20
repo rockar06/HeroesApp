@@ -11,7 +11,6 @@ class VerifyChangesPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         if (target.rootProject == target) {
             target.tasks.register("verifyChanges", VerifyChangesTask::class.java) {
-
                 val projectChanges = getModulesChanged(target)
 
                 target.logger.lifecycle("=============== Affected Files ===============")
@@ -19,8 +18,8 @@ class VerifyChangesPlugin : Plugin<Project> {
                     target.logger.lifecycle(
                         projectChanges.affectedFiles.joinToString(
                             separator = "\n - ",
-                            prefix = " - "
-                        )
+                            prefix = " - ",
+                        ),
                     )
                 } else {
                     target.logger.lifecycle(" - No changes found")
@@ -31,8 +30,8 @@ class VerifyChangesPlugin : Plugin<Project> {
                     target.logger.lifecycle(
                         projectChanges.affectedModules.joinToString(
                             separator = "\n - ",
-                            prefix = " - "
-                        ) { it.name }
+                            prefix = " - ",
+                        ) { it.name },
                     )
                 } else {
                     target.logger.lifecycle(" - No modules found")
@@ -52,8 +51,8 @@ class VerifyChangesPlugin : Plugin<Project> {
                     target.logger.lifecycle(
                         taskToExecute.joinToString(
                             separator = "\n - ",
-                            prefix = " - "
-                        )
+                            prefix = " - ",
+                        ),
                     )
                 } else {
                     target.logger.lifecycle(" - No tasks to execute")
@@ -67,19 +66,33 @@ class VerifyChangesPlugin : Plugin<Project> {
     private fun isValidTaskToBeAdded(
         projectName: String,
         taskName: String,
-        rootProject: Project
+        rootProject: Project,
     ): Boolean {
         var validTask = false
 
-        val testPatterns = if (!CoverageUtils.getIgnoreModules().contains(projectName)) listOf(
-            Regex("test.*DebugUnitTest"),
-            Regex("test.*DebugUnitTestCoverage"),
-        ) else listOf(Regex("test.*DebugUnitTest"))
+        val testPatterns = if (!CoverageUtils.getIgnoreModules().contains(projectName)) {
+            listOf(
+                Regex("test.*DebugUnitTest"),
+                Regex("test.*DebugUnitTestCoverage"),
+            )
+        } else {
+            listOf(Regex("test.*DebugUnitTest"))
+        }
 
         validTask = validTask || testPatterns.any { taskName.matches(it) }
 
         if (taskName.matches(Regex("test.*DebugUnitTestCoverageVerification"))) {
             validTask = rootProject.hasProperty("verifyCoverage")
+        }
+
+        val codeIntegrityTask = if (rootProject.hasProperty("formatCode")) {
+            "formatCode"
+        } else {
+            "checkCodeFormat"
+        }
+
+        if (taskName == codeIntegrityTask) {
+            validTask = true
         }
 
         return validTask

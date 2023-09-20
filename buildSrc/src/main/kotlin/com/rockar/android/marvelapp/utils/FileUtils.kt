@@ -2,7 +2,6 @@ package com.rockar.android.marvelapp.utils
 
 import org.gradle.api.Project
 import java.io.ByteArrayOutputStream
-import java.io.File
 import java.util.regex.Pattern
 import kotlin.system.measureTimeMillis
 
@@ -14,26 +13,9 @@ object FileUtils {
     private const val GIT_DIFF_COMMAND = "git diff --name-only --diff-filter=AMR HEAD"
     private const val SPLASH_PATH_DELIMITER = "/"
     private const val KOTLIN_FILES_PATTERN = "(\\.(kt|kts)\$)"
-    private val EXCLUDED_PROJECTS = listOf(
-        "",
-        "buildSrc",
-        "app-phone"
-    )
 
-    fun findLocalChangesByModule(project: Project): Array<String> {
-        val changedFiles = findLocalChanges(project)
-
-        val projectPath = project.projectDir.absolutePath.replace(
-            "${project.rootDir.absolutePath}${File.separator}",
-            ""
-        ).replace("\\", "/") // for Windows OS
-
-        return changedFiles.filter { it.startsWith("$projectPath/") }.toTypedArray()
-    }
-
-    fun findLocalChanges(project: Project): List<String> {
+    private fun findLocalChanges(project: Project): List<String> {
         val changedFiles = arrayListOf<String>()
-
 
         val timeToFindLocalChanges = measureTimeMillis {
             val systemOutStream = ByteArrayOutputStream()
@@ -47,11 +29,10 @@ object FileUtils {
 
             val kotlinFilesPattern = Pattern.compile(KOTLIN_FILES_PATTERN)
 
-
             result.forEach {
                 val matcher = kotlinFilesPattern.matcher(it)
                 if (matcher.find()) {
-                    changedFiles.add("$it")
+                    changedFiles.add(it)
                 }
             }
         }
@@ -73,7 +54,6 @@ object FileUtils {
                 splitterString.getOrElse(indexSrc - 1) { EMPTY_STRING }
             }.filterNot { it.isEmpty() }.toSet()
 
-
             project.subprojects {
                 if (affectedModulesByChanges.contains(name)) {
                     affectedModules.add(this)
@@ -91,5 +71,5 @@ object FileUtils {
 
 data class ProjectChanges(
     var affectedFiles: List<String> = emptyList(),
-    var affectedModules: Set<Project> = emptySet()
+    var affectedModules: Set<Project> = emptySet(),
 )
