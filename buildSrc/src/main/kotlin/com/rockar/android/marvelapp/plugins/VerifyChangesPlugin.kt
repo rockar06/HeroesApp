@@ -12,10 +12,10 @@ class VerifyChangesPlugin : Plugin<Project> {
         if (target.rootProject == target) {
             target.tasks.register("verifyChanges", VerifyChangesTask::class.java) {
 
-                val projectsToEvaluate = if (target.hasProperty("pipeline")) {
-                    getLocalTaskToExecute(target)
-                } else {
+                val projectsToEvaluate = if (target.hasProperty("localChanges")) {
                     target.subprojects
+                } else {
+                    getLocalTaskToExecute(target)
                 }
 
 

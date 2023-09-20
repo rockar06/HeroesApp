@@ -30,7 +30,7 @@ jobs:
 
       - run: echo "Running pull request verifications"
       - name: Execute Gradle VerifyChanges
-        run: ./gradlew verifyChanges -Ppipeline -PverifyCoverage
+        run: ./gradlew verifyChanges -PverifyCoverage
 
       - run: echo "Running build command"
       - name: Execute Gradle Assemble Debug
