@@ -13,9 +13,9 @@ class VerifyChangesPlugin : Plugin<Project> {
             target.tasks.register("verifyChanges", VerifyChangesTask::class.java) {
 
                 val projectsToEvaluate = if (target.hasProperty("localChanges")) {
-                    target.subprojects
-                } else {
                     getLocalTaskToExecute(target)
+                } else {
+                    target.subprojects
                 }
 
 
