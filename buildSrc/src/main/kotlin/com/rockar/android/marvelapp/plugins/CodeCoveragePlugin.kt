@@ -42,7 +42,6 @@ class CodeCoveragePlugin : Plugin<Project> {
     private fun createCoverageTask(project: Project, testTaskName: String) {
         val coverageTaskName = "${testTaskName}Coverage"
         project.tasks.register(coverageTaskName, JacocoReport::class.java) {
-
             group = LifecycleBasePlugin.VERIFICATION_GROUP
             description = "Generate Jacoco coverage report for $testTaskName"
 
@@ -52,7 +51,7 @@ class CodeCoveragePlugin : Plugin<Project> {
 
             classDirectories.setFrom(buildClassDirectories(project))
             sourceDirectories.setFrom(DEFAULT_SOURCE_DIRECTORIES)
-            executionData(File(getBuildDir(project), "jacoco/${testTaskName}.exec"))
+            executionData(File(getBuildDir(project), "jacoco/$testTaskName.exec"))
         }
     }
 
@@ -61,9 +60,8 @@ class CodeCoveragePlugin : Plugin<Project> {
         val coverageVerificationTaskName = "${coverageTaskName}Verification"
         project.tasks.register(
             coverageVerificationTaskName,
-            JacocoCoverageVerification::class.java
+            JacocoCoverageVerification::class.java,
         ) {
-
             group = LifecycleBasePlugin.VERIFICATION_GROUP
             description = "Verify Jacoco coverage for $testTaskName"
 
@@ -87,7 +85,7 @@ class CodeCoveragePlugin : Plugin<Project> {
 
             classDirectories.setFrom(buildClassDirectories(project))
             sourceDirectories.setFrom(DEFAULT_SOURCE_DIRECTORIES)
-            executionData(File(getBuildDir(project), "jacoco/${testTaskName}.exec"))
+            executionData(File(getBuildDir(project), "jacoco/$testTaskName.exec"))
         }
     }
 
@@ -103,7 +101,7 @@ class CodeCoveragePlugin : Plugin<Project> {
 
     companion object {
 
-        private val DEFAULT_FILE_TREE_PATH = "/tmp/kotlin-classes/debug"
+        private const val DEFAULT_FILE_TREE_PATH = "/tmp/kotlin-classes/debug"
 
         private val DEFAULT_EXCLUDES = listOf(
             "**/*MapperImpl*.*",
@@ -119,7 +117,7 @@ class CodeCoveragePlugin : Plugin<Project> {
             "**/*_MembersInjector.class",
             "**/*_Factory*.*",
             "**/*_Provide*Factory*.*",
-            "**/*Extensions*.*"
+            "**/*Extensions*.*",
         )
 
         private val DEFAULT_SOURCE_DIRECTORIES = listOf(

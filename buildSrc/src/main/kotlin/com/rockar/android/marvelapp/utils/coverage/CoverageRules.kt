@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class CoverageRules(
     val branchThreshold: Double,
     val instructionThreshold: Double,
-    val ignore: List<String>
+    val ignore: List<String>,
 )
