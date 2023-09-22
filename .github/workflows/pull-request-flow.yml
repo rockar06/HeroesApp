@@ -43,3 +43,8 @@ jobs:
           name: app-phone-debug
           path: apps/app-phone/build/outputs/apk/debug/app-phone-debug.apk
           retention-days: 1
+
+      - name: Download Debug APK Build
+        uses: actions/download-artifact@v3
+        with:
+          name: app-phone-debug
