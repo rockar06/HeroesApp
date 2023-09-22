@@ -9,7 +9,7 @@ object FileUtils {
     private const val SPACE_DELIMITER = " "
     private const val EMPTY_STRING = ""
     private const val SRC_DIR_NAME = "src"
-    private const val GIT_DIFF_COMMAND = "git diff --name-only --diff-filter=AMR"
+    private const val GIT_DIFF_COMMAND = "git diff --name-only --diff-filter=AMR HEAD"
     private const val GIT_DIFF_UNTRACKED_COMMAND = "git ls-files --others --exclude-standard"
     private const val SPLASH_PATH_DELIMITER = "/"
     private const val KOTLIN_FILES_PATTERN = "(\\.(kt|kts)\$)"
