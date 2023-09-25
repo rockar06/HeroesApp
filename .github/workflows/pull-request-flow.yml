@@ -5,7 +5,7 @@ on:
       - main
 
 jobs:
-  Verify-And-Test:
+  VerifyAndTest:
     runs-on: ubuntu-latest
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
@@ -28,6 +28,8 @@ jobs:
       - run: echo "🐘 Set up Gradle for the workflow"
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
+        with:
+          cache-disabled: true
 
       - run: echo "Running pull request verifications"
       - name: Execute Gradle VerifyChanges
@@ -37,3 +39,9 @@ jobs:
       - name: Execute Gradle Assemble Debug
         run: ./gradlew :app-phone:assembleDebug
 
+      - name: Upload Debug APK Build
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-phone-debug
+          path: apps/app-phone/build/outputs/apk/debug/app-phone-debug.apk
+          retention-days: 7
