@@ -5,7 +5,7 @@ on:
       - main
 
 jobs:
-  Verify-And-Test:
+  VerifyAndTest:
     runs-on: ubuntu-latest
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
@@ -22,11 +22,14 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: 'gradle'
       - run: echo "Java is already configured in the runner"
 
       - run: echo "🐘 Set up Gradle for the workflow"
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
+        with:
+          cache-disabled: true
 
       - run: echo "Running pull request verifications"
       - name: Execute Gradle VerifyChanges
