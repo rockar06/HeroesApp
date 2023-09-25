@@ -72,5 +72,3 @@ jobs:
             | Commit   | ${{ env.HEAD_SHA }}     |
             | Logs     | ${{ env.JOB_PATH }}     |
             | APK      | ${{ env.ARTIFACT_URL }} |
-            
-            
