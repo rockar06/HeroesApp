@@ -3,9 +3,9 @@ name: Comment Artifact URL on PR
 on:
   workflow_run:
     types:
-      - "completed"
+      - 'completed'
     workflows:
-      - "Validate PR Checks"
+      - 'Validate PR Checks'
 
 jobs:
   PostArtifactUrl:
