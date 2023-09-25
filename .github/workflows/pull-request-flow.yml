@@ -44,4 +44,5 @@ jobs:
         with:
           name: app-phone-debug
           path: apps/app-phone/build/outputs/apk/debug/app-phone-debug.apk
+          if-no-files-found: error
           retention-days: 7
