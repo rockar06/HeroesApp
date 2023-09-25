@@ -74,9 +74,9 @@ jobs:
             | APK      | ${{ env.ARTIFACT_URL }} |
 
       - name: Posting comment was success!
-        if: ${{ success() }
+        if: ${{ success() }}
         run: exit 0
 
       - name: Posting comment fails!
-        if: ${{ failure() }
+        if: ${{ failure() }}
         run: exit 1
