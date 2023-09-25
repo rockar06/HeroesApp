@@ -22,7 +22,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: 'gradle'
+          cache: gradle
       - run: echo "Java is already configured in the runner"
 
       - run: echo "🐘 Set up Gradle for the workflow"
@@ -44,4 +44,5 @@ jobs:
         with:
           name: app-phone-debug
           path: apps/app-phone/build/outputs/apk/debug/app-phone-debug.apk
+          if-no-files-found: error
           retention-days: 7
