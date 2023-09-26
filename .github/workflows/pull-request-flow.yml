@@ -22,7 +22,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: 'gradle'
+          cache: gradle
       - run: echo "Java is already configured in the runner"
 
       - run: echo "🐘 Set up Gradle for the workflow"
