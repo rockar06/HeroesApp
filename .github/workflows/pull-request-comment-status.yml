@@ -27,34 +27,29 @@ jobs:
                         })[0].id;
             
             const variables = {
-              artifactId: artifactId,
-              previousJobId: context.payload.workflow_run.id,
-              suiteId: context.payload.workflow_run.check_suit_id,
-              pullRequestNumber: context.issue.number
+              artifactId: artifactId
             }
-            
-            console.log("Printing variables attributes")
-            console.log(variables)
             
             return variables
 
       - name: Set Environment Variables
         run: |
           VARIABLES=${{ toJSON(steps.workflow-data.outputs.result) }}
+          WORKFLOW_RUN_EVENT_OBJ=${{ toJSON(github.event.workflow_run) }}
           
           ARTIFACT_ID=$(jq -r '.artifactId' <<< "VARIABLES")
           echo "ARTIFACT_ID -> $ARTIFACT_ID" 
           echo "ARTIFACT_ID=$ARTIFACT_ID" >> "$GITHUB_ENV"
           
-          PREVIOUS_JOB_ID=$(jq -r '.previousJobId' <<< "VARIABLES")
+          PREVIOUS_JOB_ID=$(jq -r '.id' <<< "WORKFLOW_RUN_EVENT_OBJ")
           echo "PREVIOUS_JOB_ID -> $PREVIOUS_JOB_ID" 
           echo "PREVIOUS_JOB_ID=$PREVIOUS_JOB_ID" >> "$GITHUB_ENV"
           
-          SUITE_ID=$(jq -r '.suiteId' <<< "VARIABLES")
+          SUITE_ID=$(jq -r '.check_suite_id' <<< "WORKFLOW_RUN_EVENT_OBJ")
           echo "SUITE_ID -> $SUITE_ID" 
           echo "SUITE_ID=$SUITE_ID" >> "$GITHUB_ENV"
           
-          PULL_REQUEST_NUMBER=$(jq -r '.pullRequestNumber' <<< "VARIABLES")
+          PULL_REQUEST_NUMBER=$(jq -r '.pull_requests[0].number' <<< "WORKFLOW_RUN_EVENT_OBJ")
           echo "PULL_REQUEST_NUMBER -> $PULL_REQUEST_NUMBER" 
           echo "PULL_REQUEST_NUMBER=$PULL_REQUEST_NUMBER" >> "$GITHUB_ENV"
           
