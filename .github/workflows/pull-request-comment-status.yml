@@ -81,9 +81,9 @@ jobs:
             github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              sha: ${{ github.sha }},
+              sha: github.sha,
               state: success,
-              target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+              target_url: `https://github.com/${ github.repository }/actions/runs/${ github.run_id }`,
               context: "Posting build comment",
               description: "Posting build was successful"
             });
@@ -96,9 +96,9 @@ jobs:
             github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              sha: ${{ github.sha }},
+              sha: github.sha,
               state: failure,
-              target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+              target_url: `https://github.com/${ github.repository }/actions/runs/${ github.run_id }`,
               context: "Posting build comment",
               description: "Posting build failed"
             });
