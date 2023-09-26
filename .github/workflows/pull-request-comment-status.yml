@@ -30,7 +30,7 @@ jobs:
               artifactId: artifactId,
               previousJobId: context.payload.workflow_run.id,
               suiteId: context.payload.workflow_run.check_suit_id,
-              pullRequestNumber: context.payload.issue.number
+              pullRequestNumber: context.issue.number
             }
             
             return variables
