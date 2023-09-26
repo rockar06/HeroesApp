@@ -37,20 +37,20 @@ jobs:
 
       - name: Set Environment Variables
         run: |
-          echo "SHA_SHORT=$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
-          echo "SHA_SHORT -> $SHA_SHORT" 
           echo "ARTIFACT_ID=${{steps.workflow-data.outputs.result.artifactId}}" >> "$GITHUB_ENV"
-          echo "ARTIFACT_ID -> ARTIFACT_ID" 
+          echo "ARTIFACT_ID -> $ARTIFACT_ID" 
           echo "PREVIOUS_JOB_ID=${{steps.workflow-data.outputs.result.previousJobId}}" >> "$GITHUB_ENV"
-          echo "PREVIOUS_JOB_ID -> PREVIOUS_JOB_ID" 
+          echo "PREVIOUS_JOB_ID -> $PREVIOUS_JOB_ID" 
           echo "SUITE_ID=${{steps.workflow-data.outputs.result.suiteId}}" >> "$GITHUB_ENV"
-          echo "SUITE_ID -> SUITE_ID" 
+          echo "SUITE_ID -> $SUITE_ID" 
           echo "PULL_REQUEST_NUMBER=${{steps.workflow-data.outputs.result.pullRequestNumber}}" >> "$GITHUB_ENV"
-          echo "PULL_REQUEST_NUMBER -> PULL_REQUEST_NUMBER" 
+          echo "PULL_REQUEST_NUMBER -> $PULL_REQUEST_NUMBER" 
           echo "JOB_PATH=${{ github.server_url }}/${{ github.repository }}/actions/runs/$PREVIOUS_JOB_ID" >> "$GITHUB_ENV"
-          echo "JOB_PATH -> JOB_PATH" 
+          echo "JOB_PATH -> $JOB_PATH" 
           echo "ARTIFACT_URL=${{ github.server_url }}/${{ github.repository }}/suites/$SUITE_ID/artifacts/$ARTIFACT_ID" >> "$GITHUB_ENV"
-          echo "ARTIFACT_URL -> ARTIFACT_URL" 
+          echo "ARTIFACT_URL -> $ARTIFACT_URL" 
+          echo "HEAD_SHA=$GITHUB_SHA" >> "$GITHUB_ENV"
+          echo "HEAD_SHA -> HEAD_SHA"
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
@@ -69,6 +69,6 @@ jobs:
             ✅ Build Successful! ✅
             | Name     | Link                    |
             | -------- | ----------------------- |
-            | Commit   | ${{ env.SHA_SHORT }}     |
+            | Commit   | ${{ env.HEAD_SHA }}     |
             | Logs     | ${{ env.JOB_PATH }}     |
             | APK      | ${{ env.ARTIFACT_URL }} |
