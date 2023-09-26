@@ -82,7 +82,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               sha: github.sha,
-              state: success,
+              state: "success",
               target_url: `https://github.com/${ github.repository }/actions/runs/${ github.run_id }`,
               context: "Posting build comment",
               description: "Posting build was successful"
@@ -97,7 +97,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               sha: github.sha,
-              state: failure,
+              state: "failure",
               target_url: `https://github.com/${ github.repository }/actions/runs/${ github.run_id }`,
               context: "Posting build comment",
               description: "Posting build failed"
