@@ -83,16 +83,24 @@ class CodeCoveragePlugin : Plugin<Project> {
                 }
             }
 
-            classDirectories.setFrom(buildClassDirectories(project))
             sourceDirectories.setFrom(DEFAULT_SOURCE_DIRECTORIES)
+            classDirectories.setFrom(buildClassDirectories(project))
             executionData(File(getBuildDir(project), "jacoco/$testTaskName.exec"))
         }
     }
 
     private fun buildClassDirectories(project: Project): MutableIterable<*> {
-        return project.fileTree("${getBuildDir(project)}$DEFAULT_FILE_TREE_PATH").apply {
-            setExcludes(DEFAULT_EXCLUDES)
+        return project.fileTree("${getBuildDir(project)}$DEFAULT_FILE_TREE_PATH_DEBUG").apply {
+            setExcludes(DEFAULT_EXCLUDES + getDebugFiles(project))
         }.toMutableList()
+    }
+
+    private fun getDebugFiles(project: Project): Sequence<String> {
+        return File(project.projectDir, "src/debug").walk().filter {
+            !it.isDirectory && it.name.endsWith(".kt")
+        }.map {
+            "**/" + it.name.replace(".kt", "*")
+        }
     }
 
     private fun getBuildDir(project: Project): File {
@@ -101,7 +109,7 @@ class CodeCoveragePlugin : Plugin<Project> {
 
     companion object {
 
-        private const val DEFAULT_FILE_TREE_PATH = "/tmp/kotlin-classes/debug"
+        private const val DEFAULT_FILE_TREE_PATH_DEBUG = "/tmp/kotlin-classes/debug"
 
         private val DEFAULT_EXCLUDES = listOf(
             "**/*MapperImpl*.*",
