@@ -6,9 +6,14 @@ import com.rockar.android.marvelapp.dependencies.Plugins
 import com.rockar.android.marvelapp.dependencies.ProjectDependencies
 import com.rockar.android.marvelapp.utils.android
 import com.rockar.android.marvelapp.utils.kotlinOptions
+import com.rockar.android.marvelapp.utils.implementation
+import com.rockar.android.marvelapp.utils.kapt
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Dependency
+import org.gradle.api.artifacts.dsl.DependencyHandler
+import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.get
 
 class MarvelFeaturePlugin : Plugin<Project> {
@@ -61,11 +66,9 @@ class MarvelFeaturePlugin : Plugin<Project> {
     }
 
     private fun configureDependencies(target: Project) {
-        with(target.configurations.get("implementation").dependencies) {
-            add(target.dependencies.create(HiltDependencies.hiltAndroid))
-        }
-        with(target.configurations.get("kapt").dependencies) {
-            add(target.dependencies.create(HiltDependencies.hiltCompiler))
+        target.dependencies {
+            implementation(HiltDependencies.hiltAndroid)
+            kapt(HiltDependencies.hiltCompiler)
         }
     }
 }
