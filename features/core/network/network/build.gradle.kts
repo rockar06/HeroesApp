@@ -5,7 +5,3 @@ plugins {
 android {
     namespace = "com.rockar.android.network"
 }
-
-dependencies {
-
-}
