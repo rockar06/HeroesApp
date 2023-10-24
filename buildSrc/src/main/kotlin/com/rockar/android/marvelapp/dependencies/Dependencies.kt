@@ -8,14 +8,17 @@ object Plugins {
     const val verifyChanges = "com.rockar.android.plugins.verify"
 }
 
+object HiltDependencies {
+    const val hiltAndroid = "com.google.dagger:hilt-android:$hiltAndroidPluginVersion"
+    const val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltAndroidPluginVersion"
+}
+
 object ProjectDependencies {
     const val coreKtx = "androidx.core:core-ktx:$coreKtxVersion"
     const val appCompat = "androidx.appcompat:appcompat:$appcompatVersion"
     const val googleMaterial = "com.google.android.material:material:$materialVersion"
     const val coroutinesAndroid =
         "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesAndroidVersion"
-    const val hiltAndroid = "com.google.dagger:hilt-android:$hiltAndroidPluginVersion"
-    const val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltAndroidPluginVersion"
 
     const val retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
     const val moshi = "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
