@@ -16,3 +16,7 @@ dependencyResolutionManagement {
 rootProject.name = "MarvelApp"
 include(":app-phone")
 project(":app-phone").projectDir = file("./apps/app-phone")
+include(":network")
+project(":network").projectDir = file("./features/core/network/network")
+include(":network-api")
+project(":network-api").projectDir = file("./features/core/network/network-api")
