@@ -10,8 +10,6 @@ android {
 
 dependencies {
 
-    //implementation(ProjectDependencies.hiltAndroid)
-    //implementation(ProjectDependencies.hiltCompiler)
     implementation(ProjectDependencies.coreKtx)
     implementation(ProjectDependencies.appCompat)
     implementation(ProjectDependencies.googleMaterial)
