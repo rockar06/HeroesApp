@@ -92,7 +92,7 @@ class CodeCoveragePlugin : Plugin<Project> {
     }
 
     private fun buildClassDirectories(project: Project): MutableIterable<*> {
-        val kotlinClasses = project.fileTree("${getBuildDir(project)}/tmp/kotlin-classes/debug").apply {
+        val kotlinClasses = project.fileTree("${getBuildDir(project)}$DEFAULT_FILE_TREE_PATH_DEBUG").apply {
             setExcludes(DEFAULT_EXCLUDES + getDebugFiles(project))
         }
 
