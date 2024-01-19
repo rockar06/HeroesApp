@@ -27,7 +27,16 @@ object ProjectDependencies {
     const val okHttpBom = "$baseOkHttp:okhttp-bom:$okHttpBomVersion"
     const val okHttpClient = "$baseOkHttp:okhttp"
     const val okHttpLogger = "$baseOkHttp:logging-interceptor"
+}
 
+object NetworkDependencies {
+    const val retrofit = "com.squareup.retrofit2:retrofit:2.9.0"
+    const val moshiConverter = "com.squareup.retrofit2:converter-moshi:2.9.0"
+    const val okHttpClient = "com.squareup.okhttp3:okhttp:4.10.0"
+    const val logginInterceptor = "com.squareup.okhttp3:logging-interceptor:4.10.0"
+}
+
+object TestDependencies {
     const val jUnit = "junit:junit:$jUnitVersion"
     const val jUnitInstrumented = "androidx.test.ext:junit:$jUnitInstrumentedVersion"
     const val espressoCore = "androidx.test.espresso:espresso-core:$espressoCoreVersion"

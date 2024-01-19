@@ -3,5 +3,5 @@ plugins {
 }
 
 android {
-    namespace = "com.rockar.android.network"
+    namespace = "com.rockar.android.network.api"
 }
