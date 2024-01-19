@@ -16,6 +16,9 @@ dependencies {
     implementation(NetworkDependencies.moshiConverter)
     implementation(NetworkDependencies.okHttpClient)
     implementation(NetworkDependencies.logginInterceptor)
+
+    implementation(project(":utils"))
+
     testImplementation(TestDependencies.jUnit)
     testImplementation(TestDependencies.mockkLibrary)
     testImplementation(TestDependencies.truthLibrary)
