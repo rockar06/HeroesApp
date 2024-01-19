@@ -1,4 +1,5 @@
 import com.rockar.android.marvelapp.dependencies.ProjectDependencies
+import com.rockar.android.marvelapp.dependencies.TestDependencies
 
 plugins {
     id("com.rockar.android.plugins.feature")
@@ -13,7 +14,7 @@ dependencies {
     implementation(ProjectDependencies.coreKtx)
     implementation(ProjectDependencies.appCompat)
     implementation(ProjectDependencies.googleMaterial)
-    testImplementation(ProjectDependencies.jUnit)
-    androidTestImplementation(ProjectDependencies.jUnitInstrumented)
-    androidTestImplementation(ProjectDependencies.espressoCore)
+    testImplementation(TestDependencies.jUnit)
+    androidTestImplementation(TestDependencies.jUnitInstrumented)
+    androidTestImplementation(TestDependencies.espressoCore)
 }

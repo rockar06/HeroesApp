@@ -3,7 +3,7 @@ package com.rockar.android.marvelapp.plugins
 import com.rockar.android.marvelapp.dependencies.GradleConfigVersions
 import com.rockar.android.marvelapp.dependencies.HiltDependencies
 import com.rockar.android.marvelapp.dependencies.Plugins
-import com.rockar.android.marvelapp.dependencies.ProjectDependencies
+import com.rockar.android.marvelapp.dependencies.TestDependencies
 import com.rockar.android.marvelapp.utils.android
 import com.rockar.android.marvelapp.utils.implementation
 import com.rockar.android.marvelapp.utils.kapt
@@ -38,7 +38,7 @@ class MarvelFeaturePlugin : Plugin<Project> {
             defaultConfig {
                 minSdk = GradleConfigVersions.minSdk
 
-                testInstrumentationRunner = ProjectDependencies.testInstrumentationRunner
+                testInstrumentationRunner = TestDependencies.testInstrumentationRunner
                 consumerProguardFiles("consumer-rules.pro")
             }
 
