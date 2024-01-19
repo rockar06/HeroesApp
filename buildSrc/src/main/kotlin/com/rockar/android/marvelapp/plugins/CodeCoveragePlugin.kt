@@ -1,5 +1,6 @@
 package com.rockar.android.marvelapp.plugins
 
+import com.android.build.gradle.tasks.factory.AndroidUnitTest
 import com.rockar.android.marvelapp.dependencies.Plugins
 import com.rockar.android.marvelapp.utils.androidLibrary
 import com.rockar.android.marvelapp.utils.capitalizeFirst
@@ -7,6 +8,7 @@ import com.rockar.android.marvelapp.utils.coverage.CoverageUtils
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.language.base.plugins.LifecycleBasePlugin
+import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
 import org.gradle.testing.jacoco.tasks.JacocoCoverageVerification
 import org.gradle.testing.jacoco.tasks.JacocoReport
 import java.io.File
@@ -90,9 +92,11 @@ class CodeCoveragePlugin : Plugin<Project> {
     }
 
     private fun buildClassDirectories(project: Project): MutableIterable<*> {
-        return project.fileTree("${getBuildDir(project)}$DEFAULT_FILE_TREE_PATH_DEBUG").apply {
+        val kotlinClasses = project.fileTree("${getBuildDir(project)}$DEFAULT_FILE_TREE_PATH_DEBUG").apply {
             setExcludes(DEFAULT_EXCLUDES + getDebugFiles(project))
-        }.toMutableList()
+        }
+
+        return mutableListOf(kotlinClasses)
     }
 
     private fun getDebugFiles(project: Project): Sequence<String> {

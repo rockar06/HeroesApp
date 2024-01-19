@@ -20,9 +20,10 @@ object FileUtils {
             commandLine = gitCommand.split(SPACE_DELIMITER)
             standardOutput = systemOutStream
         }
-        return systemOutStream.toString().trim().split('\n').also {
-            systemOutStream.close()
-        }
+        val listOfChanges =
+            systemOutStream.toString().trim().takeIf { it.isNotEmpty() }?.split('\n') ?: emptyList()
+        systemOutStream.close()
+        return listOfChanges
     }
 
     private fun findLocalChanges(project: Project): List<String> {
