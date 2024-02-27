@@ -23,3 +23,6 @@ fun DependencyHandler.implementation(dependencyNotation: Any): Dependency? =
 
 fun DependencyHandler.kapt(dependencyNotation: Any): Dependency? =
     add("kapt", dependencyNotation)
+
+fun DependencyHandler.lintChecks(dependencyNotation: Any): Dependency? =
+    add("lintChecks", dependencyNotation)
