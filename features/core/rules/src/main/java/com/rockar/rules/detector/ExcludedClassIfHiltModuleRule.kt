@@ -22,7 +22,7 @@ class ExcludedClassIfHiltModuleRule : Detector(), SourceCodeScanner {
                     context.report(
                         issue = ISSUE,
                         location = context.getNameLocation(node),
-                        message = "ExcludeClassFromJacocoGeneratedReport can be only used in Hilt modules."
+                        message = "ExcludeClassFromJacocoGeneratedReport can be only used in Hilt modules.",
                     )
                 }
             }
@@ -35,7 +35,7 @@ class ExcludedClassIfHiltModuleRule : Detector(), SourceCodeScanner {
         private const val DAGGER_MODULE_ANNOTATION = "dagger.Module"
         private val IMPLEMENTATION = Implementation(
             ExcludedClassIfHiltModuleRule::class.java,
-            Scope.JAVA_FILE_SCOPE
+            Scope.JAVA_FILE_SCOPE,
         )
 
         val ISSUE = Issue.create(
@@ -48,7 +48,7 @@ class ExcludedClassIfHiltModuleRule : Detector(), SourceCodeScanner {
             priority = 9,
             severity = Severity.ERROR,
             androidSpecific = true,
-            implementation = IMPLEMENTATION
+            implementation = IMPLEMENTATION,
         )
     }
 }
