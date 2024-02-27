@@ -8,11 +8,12 @@ import com.rockar.android.marvelapp.utils.android
 import com.rockar.android.marvelapp.utils.implementation
 import com.rockar.android.marvelapp.utils.kapt
 import com.rockar.android.marvelapp.utils.kotlinOptions
+import com.rockar.android.marvelapp.utils.lintChecks
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.project
 
 class MarvelFeaturePlugin : Plugin<Project> {
 
@@ -44,7 +45,6 @@ class MarvelFeaturePlugin : Plugin<Project> {
 
             buildTypes {
                 release {
-                    isMinifyEnabled = false
                     proguardFiles(
                         getDefaultProguardFile("proguard-android-optimize.txt"),
                         "proguard-rules.pro",
@@ -53,8 +53,8 @@ class MarvelFeaturePlugin : Plugin<Project> {
             }
 
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_1_8
-                targetCompatibility = JavaVersion.VERSION_1_8
+                sourceCompatibility = JavaVersion.VERSION_17
+                targetCompatibility = JavaVersion.VERSION_17
             }
 
             kotlinOptions {
@@ -66,7 +66,11 @@ class MarvelFeaturePlugin : Plugin<Project> {
     private fun configureDependencies(target: Project) {
         target.dependencies {
             implementation(HiltDependencies.hiltAndroid)
+            implementation(project(":utils"))
+
             kapt(HiltDependencies.hiltCompiler)
+
+            lintChecks(project(":rules"))
         }
     }
 }

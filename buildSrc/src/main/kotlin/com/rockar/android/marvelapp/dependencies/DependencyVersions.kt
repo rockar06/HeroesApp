@@ -19,5 +19,5 @@ const val mockkVersion = "1.13.7"
 object GradleConfigVersions {
     const val compileSdk = 34
     const val minSdk = 28
-    const val jvmTarget = "1.8"
+    const val jvmTarget = "17"
 }
