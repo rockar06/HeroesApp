@@ -18,20 +18,20 @@ dependencies {
 gradlePlugin {
     plugins {
         create("androidLibraryConfiguration") {
-            id = "com.rockar.android.plugins.feature"
-            implementationClass = "com.rockar.android.marvelapp.plugins.MarvelFeaturePlugin"
+            id = "com.android.plugins.feature"
+            implementationClass = "com.android.marvelapp.plugins.MarvelFeaturePlugin"
         }
         create("validateChangesPlugin") {
-            id = "com.rockar.android.plugins.verify"
-            implementationClass = "com.rockar.android.marvelapp.plugins.VerifyChangesPlugin"
+            id = "com.android.plugins.verify"
+            implementationClass = "com.android.marvelapp.plugins.VerifyChangesPlugin"
         }
         create("checkAndFormatKotlinCodePlugin") {
-            id = "com.rockar.android.plugins.format"
-            implementationClass = "com.rockar.android.marvelapp.plugins.FormatCodePlugin"
+            id = "com.android.plugins.format"
+            implementationClass = "com.android.marvelapp.plugins.FormatCodePlugin"
         }
         create("checkCodeCoveragePlugin") {
-            id = "com.rockar.android.plugins.coverage"
-            implementationClass = "com.rockar.android.marvelapp.plugins.CodeCoveragePlugin"
+            id = "com.android.plugins.coverage"
+            implementationClass = "com.android.marvelapp.plugins.CodeCoveragePlugin"
         }
     }
 }

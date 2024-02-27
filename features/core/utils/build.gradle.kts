@@ -1,5 +1,5 @@
-import com.rockar.android.marvelapp.dependencies.GradleConfigVersions
-import com.rockar.android.marvelapp.dependencies.ProjectDependencies
+import com.android.marvelapp.dependencies.GradleConfigVersions
+import com.android.marvelapp.dependencies.ProjectDependencies
 
 plugins {
     id("com.android.library")
@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.rockar.utils"
+    namespace = "com.android.utils"
     compileSdk = GradleConfigVersions.compileSdk
 
     defaultConfig {

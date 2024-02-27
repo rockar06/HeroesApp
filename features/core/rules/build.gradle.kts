@@ -14,6 +14,6 @@ dependencies {
 
 tasks.jar {
     manifest {
-        attributes("Lint-Registry-v2" to "com.rockar.rules.detector.registry.CustomIssueRegistry")
+        attributes("Lint-Registry-v2" to "com.android.rules.detector.registry.CustomIssueRegistry")
     }
 }
