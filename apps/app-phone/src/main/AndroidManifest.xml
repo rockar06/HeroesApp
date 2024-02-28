@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MarvelApp"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+                android:name="com.android.marvelapp.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MarvelApp">
             <intent-filter>

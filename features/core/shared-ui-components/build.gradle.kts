@@ -1,11 +1,11 @@
-import com.rockar.android.marvelapp.dependencies.ProjectDependencies
+import com.android.marvelapp.dependencies.ProjectDependencies
 
 plugins {
-    id("com.rockar.android.plugins.feature")
+    id("com.android.plugins.feature")
 }
 
 android {
-    namespace = "com.rockar.shared.ui.components"
+    namespace = "com.android.shared.ui.components"
 }
 
 dependencies {

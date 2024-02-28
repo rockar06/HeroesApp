@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.rockar.android.marvelapp"
+    namespace = "com.android.marvelapp"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.rockar.android.marvelapp"
+        applicationId = "com.android.marvelapp"
         minSdk = 28
         targetSdk = 34
         versionCode = 1
