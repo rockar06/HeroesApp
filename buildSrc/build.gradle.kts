@@ -12,6 +12,7 @@ sourceSets.main {
 dependencies {
     implementation("com.android.tools.build:gradle:8.1.1")
     implementation(kotlin("gradle-plugin:1.9.0"))
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0-RC.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 }
 
@@ -19,7 +20,7 @@ gradlePlugin {
     plugins {
         create("androidLibraryConfiguration") {
             id = "com.android.plugins.feature"
-            implementationClass = "com.android.marvelapp.plugins.MarvelFeaturePlugin"
+            implementationClass = "com.android.marvelapp.plugins.feature.MarvelFeaturePlugin"
         }
         create("validateChangesPlugin") {
             id = "com.android.plugins.verify"
